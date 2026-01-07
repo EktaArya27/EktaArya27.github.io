@@ -1,74 +1,345 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Ekta | Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ekta Chalotra | Portfolio</title>
+
   <style>
-    body { font-family: Arial, sans-serif; margin:0; background:#f6f7fb; color:#222; }
-    header { background:#111827; color:white; padding:40px 20px; text-align:center; }
-    header h1 { margin:0; font-size:34px; }
-    header p { margin:10px 0 0; opacity:0.9; }
-    .container { max-width: 900px; margin:auto; padding:20px; }
-    .card { background:white; padding:18px; margin:15px 0; border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,0.08); }
-    h2 { margin-top:0; }
-    .tag { display:inline-block; padding:6px 10px; border-radius:999px; background:#e5e7eb; margin:4px 6px 0 0; font-size:13px; }
-    footer { text-align:center; padding:20px; font-size:14px; color:#666; }
+    :root{
+      --bg1:#0b1020;
+      --bg2:#151a2e;
+      --glass: rgba(255,255,255,0.10);
+      --glass2: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.18);
+      --text: #e9ecff;
+      --muted: rgba(233,236,255,0.75);
+      --accent: #7c3aed;
+      --accent2:#22c55e;
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,0.40), transparent 60%),
+        radial-gradient(1000px 700px at 80% 20%, rgba(34,197,94,0.25), transparent 60%),
+        radial-gradient(900px 650px at 50% 90%, rgba(59,130,246,0.22), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* subtle floating blobs */
+    .blob{
+      position:absolute;
+      filter: blur(40px);
+      opacity:0.6;
+      transform: translateZ(0);
+      animation: floaty 10s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .blob.b1{ width:320px; height:320px; left:-80px; top:120px; background: rgba(124,58,237,0.45); border-radius:40% 60% 55% 45%; }
+    .blob.b2{ width:360px; height:360px; right:-120px; top:80px; background: rgba(34,197,94,0.30); border-radius:55% 45% 40% 60%; animation-duration: 12s; }
+    .blob.b3{ width:420px; height:420px; left:30%; bottom:-200px; background: rgba(59,130,246,0.25); border-radius:50% 50% 45% 55%; animation-duration: 14s; }
+
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0px) translateX(0px) scale(1); }
+      50%{ transform: translateY(-22px) translateX(10px) scale(1.03); }
+    }
+
+    .wrap{ position:relative; }
+    .container{
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    /* hero */
+    .hero{
+      margin-top: 20px;
+      padding: 28px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, var(--glass), var(--glass2));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 16px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hero h1{
+      margin: 6px 0 8px;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .hero p{
+      margin: 0;
+      max-width: 680px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .cta{
+      margin-top: 18px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 600;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-2px); background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,0.95), rgba(59,130,246,0.85));
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 18px 40px rgba(124,58,237,0.25);
+    }
+    .btn.primary:hover{ transform: translateY(-2px) scale(1.01); }
+
+    /* grid cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .card{
+      grid-column: span 12;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
+      transition: transform 0.12s ease, border-color 0.2s ease;
+      will-change: transform;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(500px 200px at var(--mx, 50%) var(--my, 20%),
+        rgba(255,255,255,0.18), transparent 55%);
+      opacity:0;
+      transition: opacity .18s ease;
+      pointer-events:none;
+    }
+    .card:hover{ border-color: rgba(255,255,255,0.28); }
+    .card:hover::before{ opacity:1; }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .muted{ color: var(--muted); line-height:1.6; margin:0; }
+
+    .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .tag{
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 12.5px;
+      color: rgba(233,236,255,0.85);
+    }
+
+    /* layout */
+    @media (min-width: 900px){
+      .card.about{ grid-column: span 7; }
+      .card.skills{ grid-column: span 5; }
+      .card.projects{ grid-column: span 8; }
+      .card.contact{ grid-column: span 4; }
+    }
+
+    /* section items */
+    .project{
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin-top: 10px;
+    }
+    .project h3{ margin:0 0 6px; font-size: 15px; }
+    .project p{ margin:0; color: rgba(233,236,255,0.78); line-height:1.6; font-size: 14px; }
+
+    footer{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(233,236,255,0.60);
+      font-size: 13px;
+    }
+
+    /* fade-in */
+    .reveal{ opacity:0; transform: translateY(10px); }
+    .reveal.show{ opacity:1; transform: translateY(0); transition: opacity .7s ease, transform .7s ease; }
+
+    /* motion accessibility */
+    @media (prefers-reduced-motion: reduce){
+      .blob, .btn, .card, .reveal{ animation:none !important; transition:none !important; }
+    }
   </style>
 </head>
+
 <body>
+  <div class="wrap">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
 
-<header>
-  <h1>Ekta Chalotra</h1>
-  <p>Aspiring Web Developer / IT Support | ASP.NET MVC | SQL | Power BI</p>
-</header>
+    <div class="container">
+      <section class="hero reveal">
+        <div class="topbar">
+          <div class="badge">✨ UI/UX • 3D Cards • Smooth Animations</div>
+          <div class="badge">📍 Canada • Open to Full-time</div>
+        </div>
 
-<div class="container">
+        <h1>Ekta Chalotra</h1>
+        <p>
+          Aspiring <b>Web Developer / IT Support / IT Analyst</b> with hands-on projects in
+          <b>ASP.NET MVC, SQL Server, Power BI</b> and modern UI design.
+        </p>
 
-  <div class="card">
-    <h2>About Me</h2>
-    <p>
-      I am a Computer Programming graduate in Canada. I enjoy building web applications and solving real-world problems.
-      I am looking for roles in Web Development, IT Support, or IT Analyst.
-    </p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:ektachalotra31@gmail.com">📩 Email Me</a>
+          <a class="btn" href="https://github.com/EktaArya27" target="_blank" rel="noreferrer">🐙 GitHub</a>
+          <!-- Replace # with your LinkedIn link -->
+          <a class="btn" href="#" target="_blank" rel="noreferrer">💼 LinkedIn</a>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="card about reveal" data-tilt>
+          <h2>About</h2>
+          <p class="muted">
+            I’m a Computer Programming graduate in Canada. I build responsive web apps with clean UI/UX and strong
+            backend integration. I enjoy solving real-world problems and improving user experience.
+          </p>
+        </section>
+
+        <section class="card skills reveal" data-tilt>
+          <h2>Skills</h2>
+          <div class="tags">
+            <span class="tag">C#</span>
+            <span class="tag">ASP.NET MVC</span>
+            <span class="tag">Entity Framework</span>
+            <span class="tag">SQL Server</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">GitHub</span>
+          </div>
+        </section>
+
+        <section class="card projects reveal" data-tilt>
+          <h2>Projects</h2>
+
+          <div class="project">
+            <h3>SmartFitnessGym (ASP.NET MVC)</h3>
+            <p>User/Admin roles, CRUD modules, validations, and SQL Server integration with a responsive UI.</p>
+          </div>
+
+          <div class="project">
+            <h3>NextLevel_Nilesh (Fitness Tracking)</h3>
+            <p>Public-facing site for fitness progress tracking with admin-only updates for activities & nutrition.</p>
+          </div>
+
+          <div class="project">
+            <h3>Power BI Inspection Prototype</h3>
+            <p>Excel-based data capture + Power BI dashboards for audit/defect reporting and trend insights.</p>
+          </div>
+        </section>
+
+        <section class="card contact reveal" data-tilt>
+          <h2>Contact</h2>
+          <p class="muted">Email: <b>ektachalotra31@gmail.com</b></p>
+          <p class="muted">GitHub: <b>EktaArya27</b></p>
+          <p class="muted">Portfolio: <b>ektaarya27.github.io</b></p>
+        </section>
+      </div>
+
+      <footer class="reveal">© 2026 Ekta Chalotra • Built on GitHub Pages</footer>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>Skills</h2>
-    <span class="tag">C#</span>
-    <span class="tag">ASP.NET MVC</span>
-    <span class="tag">SQL Server</span>
-    <span class="tag">HTML</span>
-    <span class="tag">CSS</span>
-    <span class="tag">Bootstrap</span>
-    <span class="tag">Power BI</span>
-    <span class="tag">GitHub</span>
-  </div>
+  <script>
+    // Fade-in on load
+    window.addEventListener("load", () => {
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        setTimeout(() => el.classList.add("show"), 120 + i * 80);
+      });
+    });
 
-  <div class="card">
-    <h2>Projects</h2>
+    // Lightweight 3D tilt (no libraries)
+    const tiltEls = document.querySelectorAll("[data-tilt]");
+    const maxTilt = 10;
 
-    <h3>SmartFitnessGym</h3>
-    <p>Gym management web application with user/admin roles, CRUD, validations, and database integration using ASP.NET MVC.</p>
+    function handleMove(e, el){
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
 
-    <h3>NextLevel_Nilesh</h3>
-    <p>Fitness tracking website where admin can update workouts, nutrition, and progress while users can view publicly.</p>
+      const rotY = (x - 0.5) * (maxTilt * 2);
+      const rotX = (0.5 - y) * (maxTilt * 2);
 
-    <h3>Power BI Inspection Forms</h3>
-    <p>Inspection and audit reporting system using Excel and Power BI dashboards.</p>
-  </div>
+      el.style.transform = `perspective(900px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-2px)`;
+      el.style.setProperty("--mx", `${(x*100).toFixed(1)}%`);
+      el.style.setProperty("--my", `${(y*100).toFixed(1)}%`);
+    }
 
-  <div class="card">
-    <h2>Contact</h2>
-    <p>Email: ektachalotra31@gmail.com</p>
-    <p>GitHub: https://github.com/EktaArya27</p>
-  </div>
+    function reset(el){
+      el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    }
 
-</div>
-
-<footer>
-  © 2026 Ekta | Portfolio
-</footer>
-
+    tiltEls.forEach(el => {
+      el.addEventListener("mousemove", (e) => handleMove(e, el));
+      el.addEventListener("mouseleave", () => reset(el));
+      el.addEventListener("mouseenter", () => reset(el));
+    });
+  </script>
 </body>
 </html>
